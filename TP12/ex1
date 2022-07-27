@@ -1,0 +1,42 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+#include <cfloat>
+
+using namespace std;
+
+//! Show file name and its contents.
+void show_file(const string& file) {
+  ifstream in(file);
+  cout << "==> " << file << " <==\n";
+  for (string line; getline(in, line); ) cout << line << '\n';
+}
+
+bool average(const string& input_fname, const string& output_fname) {
+     ofstream out(output_fname);
+     ifstream in(input_fname);
+     
+    if (in.fail()) {
+      return false;
+    }
+    else {
+      int nlines = 0;
+      string line;
+      while (getline(in,line)) {
+        nlines++;
+        double num;
+        double total = 0;
+        double count = 0;
+        istringstream iss(line);
+        while (iss >> num) {
+          total += num;
+          count += 1;
+        }
+      out <<  fixed << setprecision(3) << total/count<< endl;
+      }
+      out << "lines=" << nlines;
+      return true;
+    }
+}
+
